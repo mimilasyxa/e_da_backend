@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('uid');
+            $table->string('share_link');
             $table->string('service_name');
             $table->string('service_link');
             $table->string('ordering_person');

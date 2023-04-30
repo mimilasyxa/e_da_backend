@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 /**
  * @property int $id
  * @property string $uid
+ * @property string $share_link
  * @property string $service_name
  * @property string $service_link
  * @property string $ordering_person
@@ -30,7 +31,16 @@ class Order extends Model
 
         static::creating(function ($entity) {
             $entity->uid = Str::uuid();
+            $entity->share_link = Str::uuid();
         });
+    }
+
+    /**
+     * @return string
+     */
+    public function getShareLink(): string
+    {
+        return $this->share_link;
     }
 
     /**
