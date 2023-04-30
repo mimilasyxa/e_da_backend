@@ -9,9 +9,9 @@ class OrderService
 {
     /**
      * @param CreateOrderDTO $orderDTO
-     * @return string
+     * @return Order
      */
-    public function create(CreateOrderDTO $orderDTO): string
+    public function create(CreateOrderDTO $orderDTO): Order
     {
         $order = new Order();
 
@@ -23,6 +23,6 @@ class OrderService
 
         $order->save();
 
-        return $order->getUid();
+        return $order;
     }
 }
