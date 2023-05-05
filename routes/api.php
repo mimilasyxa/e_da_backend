@@ -1,6 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Image\ImageController;
+use App\Http\Controllers\Order\OrderController;
+use App\Http\Controllers\Participant\ParticipantController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +16,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('order')->group(function () {
+    Route::post('/', [OrderController::class, 'create'])
+        ->name('api.order.create');
 });
+
+Route::post('image', [ImageController::class, 'upload'])
+    ->name('api.image.upload');
