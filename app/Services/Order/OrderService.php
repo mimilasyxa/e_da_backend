@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Order;
 
 use App\Entities\DTO\Order\CreateOrderDTO;
 use App\Models\Order\Order;
