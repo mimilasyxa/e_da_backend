@@ -11,6 +11,7 @@ class CreateOrderResource extends JsonResource
 {
     /** @var Order */
     public $resource;
+
     /**
      * Transform the resource into an array.
      *
@@ -21,12 +22,13 @@ class CreateOrderResource extends JsonResource
         $order = $this->resource;
 
         return [
-          'id' => $order->getShareLink(),
-          'orderingPerson' => $order->getOrderingPerson(),
-          'orderingAt' => Carbon::parse($order->getOrderedAt())->toIso8601String(),
-          'serviceName' => $order->getServiceName(),
-          'serviceLink' => $order->getServiceLink(),
-          'status' => $order->getStatus()
+            'id' => $order->getUid(),
+            'shareId' => $order->getShareLink(),
+            'orderingPerson' => $order->getOrderingPerson(),
+            'orderingAt' => Carbon::parse($order->getOrderedAt())->toIso8601String(),
+            'serviceName' => $order->getServiceName(),
+            'serviceLink' => $order->getServiceLink(),
+            'status' => $order->getStatus()
         ];
     }
 }
