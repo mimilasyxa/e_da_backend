@@ -12,7 +12,7 @@ class ImageService
 
     public function __construct()
     {
-        $this->tempPath = config('storage.save_path');
+        $this->tempPath = config('storage.temp_path');
     }
 
     /**
