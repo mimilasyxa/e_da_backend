@@ -8,7 +8,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class CreateOrderRequest extends FormRequest
 {
-    const TIME_REGEX = '/\d{4}-[01][0-9]-[0-3][0-9]T[0-2][0-9]:[0-5][0-9]:[0-5][0-9].\d{3}Z/';
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -28,7 +27,7 @@ class CreateOrderRequest extends FormRequest
             'orderingPerson' => 'required|string|max:255',
             'serviceName' => 'required|string|max:255',
             'serviceLink' => 'required|string|max:255',
-            'orderingAt' => 'required|string|regex:' . self::TIME_REGEX
+            'orderingAt' => 'required|string|date_format:h:i:s',
         ];
     }
 
