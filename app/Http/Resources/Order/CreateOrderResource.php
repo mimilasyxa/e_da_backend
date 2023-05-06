@@ -25,7 +25,7 @@ class CreateOrderResource extends JsonResource
             'id' => $order->getUid(),
             'shareId' => $order->getShareLink(),
             'orderingPerson' => $order->getOrderingPerson(),
-            'orderingAt' => Carbon::parse($order->getOrderedAt())->toIso8601String(),
+            'orderingAt' => $order->getOrderedAt(),
             'serviceName' => $order->getServiceName(),
             'serviceLink' => $order->getServiceLink(),
             'status' => $order->getStatus()
