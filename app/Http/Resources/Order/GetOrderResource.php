@@ -2,15 +2,15 @@
 
 namespace App\Http\Resources\Order;
 
+use App\Http\Resources\Participant\ParticipantsCollection;
 use App\Models\Order\Order;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CreateOrderResource extends JsonResource
+class GetOrderResource extends JsonResource
 {
     /** @var Order */
     public $resource;
-
     /**
      * Transform the resource into an array.
      *
@@ -19,15 +19,16 @@ class CreateOrderResource extends JsonResource
     public function toArray(Request $request): array
     {
         $order = $this->resource;
+        $participants = $order->participants;
 
         return [
-            'id' => $order->getUid(),
-            'shareId' => $order->getShareLink(),
-            'orderingPerson' => $order->getOrderingPerson(),
-            'orderingAt' => $order->getOrderedAt(),
-            'serviceName' => $order->getServiceName(),
+            'shareLink' => $order->getShareLink(),
+            'serviceName' => $order->getServiceLink(),
             'serviceLink' => $order->getServiceLink(),
-            'status' => $order->getStatus()
+            /** @var ParticipantsCollection|null */
+            'participants' => $participants
+                ? ParticipantsCollection::collection($participants)
+                : null
         ];
     }
 }

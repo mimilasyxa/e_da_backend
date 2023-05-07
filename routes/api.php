@@ -1,8 +1,6 @@
 <?php
 
-use App\Http\Controllers\Image\ImageController;
 use App\Http\Controllers\Order\OrderController;
-use App\Http\Controllers\Participant\ParticipantController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,9 +19,10 @@ Route::get('/openapi', function () {
 });
 
 Route::prefix('order')->group(function () {
+    Route::get('/', [OrderController::class, 'get'])
+        ->name('api.order.get');
     Route::post('/', [OrderController::class, 'create'])
         ->name('api.order.create');
+    Route::post('/join', [OrderController::class, 'join'])
+        ->name('api.order.join');
 });
-
-Route::post('image', [ImageController::class, 'upload'])
-    ->name('api.image.upload');
