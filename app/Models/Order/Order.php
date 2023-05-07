@@ -2,9 +2,10 @@
 
 namespace App\Models\Order;
 
-use Carbon\Carbon;
+use App\Models\Participant\OrderParticipant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 /**
@@ -18,6 +19,7 @@ use Illuminate\Support\Str;
  * @property string $status
  * @property string $comment
  * @property string $ordered_at
+ * @property-read OrderParticipant[]|null $participants
  */
 class Order extends Model
 {
@@ -179,4 +181,11 @@ class Order extends Model
         $this->ordered_at = $ordered_at;
     }
 
+    /**
+     * @return HasMany
+     */
+    public function participants(): HasMany
+    {
+        return $this->hasMany(OrderParticipant::class, 'order_id', 'share_link');
+    }
 }

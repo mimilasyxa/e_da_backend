@@ -4,9 +4,17 @@ namespace App\Services\Order;
 
 use App\Entities\DTO\Order\CreateOrderDTO;
 use App\Models\Order\Order;
+use App\Services\Participant\ParticipantService;
+use Illuminate\Database\Eloquent\Builder;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class OrderService
 {
+    const NOT_FOUND = 'Заказ не найден!';
+    public function __construct(public ParticipantService $participantService)
+    {
+    }
+
     /**
      * @param CreateOrderDTO $orderDTO
      * @return Order
@@ -22,6 +30,28 @@ class OrderService
         $order->setStatus(Order::STATUS_CREATED);
 
         $order->save();
+
+        return $order;
+    }
+
+    /**
+     * @param string $id
+     * @return Order
+     */
+    public function get(string $id): Order
+    {
+        /** @var Order $order */
+        $order = Order::query()
+            // Если нашли по UID то это заказывальщик, если по share_link то это один из участников заказа
+            ->selectRaw("*, CASE when uid = '${id}' then 0 when share_link = '${id}' then 1 end as person")
+            ->with('participants.images')
+            ->where('uid', $id)
+            ->orWhere('share_link', $id)
+            ->first();
+
+        if (!$order) {
+            throw new NotFoundHttpException(self::NOT_FOUND);
+        }
 
         return $order;
     }
