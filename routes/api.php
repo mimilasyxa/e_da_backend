@@ -25,4 +25,6 @@ Route::prefix('order')->group(function () {
         ->name('api.order.create');
     Route::post('/join', [OrderController::class, 'join'])
         ->name('api.order.join');
+    Route::post('/proceed', [OrderController::class, 'proceed'])
+        ->name('api.order.proceed');
 });

@@ -26,6 +26,7 @@ class Order extends Model
     use HasFactory;
 
     const STATUS_CREATED = 'Created';
+    const STATUS_ORDERED = 'Ordered';
 
     protected static function boot()
     {

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Order\CreateOrderRequest;
 use App\Http\Requests\Order\GetOrderRequest;
 use App\Http\Requests\Order\JoinOrderRequest;
+use App\Http\Requests\Order\ProceedOrderRequest;
 use App\Http\Resources\Order\CreateOrderResource;
 use App\Http\Resources\Order\GetOrderResource;
 use App\Services\Order\OrderService;
@@ -32,6 +33,7 @@ class OrderController extends Controller
      * @param JoinOrderRequest $orderRequest
      * @param ParticipantService $participantService
      * @return void
+     * @throws \Exception
      */
     public function join(JoinOrderRequest $orderRequest, ParticipantService $participantService): void
     {
@@ -49,5 +51,17 @@ class OrderController extends Controller
         return new GetOrderResource($orderService->get(
             $orderRequest->getId()
         ));
+    }
+
+    /** Изменения статуса при нажатии на "Заказать"
+     *
+     *
+     * @param ProceedOrderRequest $orderRequest
+     * @param OrderService $orderService
+     * @return void
+     */
+    public function proceed(ProceedOrderRequest $orderRequest, OrderService $orderService): void
+    {
+        $orderService->proceed($orderRequest->getId());
     }
 }

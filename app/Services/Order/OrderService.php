@@ -5,7 +5,6 @@ namespace App\Services\Order;
 use App\Entities\DTO\Order\CreateOrderDTO;
 use App\Models\Order\Order;
 use App\Services\Participant\ParticipantService;
-use Illuminate\Database\Eloquent\Builder;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class OrderService
@@ -54,5 +53,25 @@ class OrderService
         }
 
         return $order;
+    }
+
+    /**
+     * @param int $orderUid
+     * @return void
+     */
+    public function proceed(int $orderUid): void
+    {
+        /** @var Order $order */
+        $order = Order::query()
+            ->where('uid', $orderUid)
+            ->first();
+
+        if (!$order) {
+            throw new NotFoundHttpException(self::NOT_FOUND);
+        }
+
+        $order->setStatus(Order::STATUS_ORDERED);
+
+        $order->save();
     }
 }
