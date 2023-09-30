@@ -4,6 +4,7 @@ namespace App\Http\Resources\Order;
 
 use App\Http\Resources\Participant\ParticipantsCollection;
 use App\Models\Order\Order;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -23,7 +24,9 @@ class GetOrderResource extends JsonResource
 
         return [
             'shareLink' => $order->getShareLink(),
-            'serviceName' => $order->getServiceLink(),
+            'orderingAt' => $order->getOrderedAt(),
+            'orderingPerson' => Carbon::parse($order->getOrderingPerson())->toIso8601String(),
+            'serviceName' => $order->getServiceName(),
             'serviceLink' => $order->getServiceLink(),
             /** @var ParticipantsCollection|null */
             'participants' => $participants
