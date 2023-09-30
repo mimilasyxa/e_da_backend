@@ -27,7 +27,7 @@ class CreateOrderRequest extends FormRequest
             'orderingPerson' => 'required|string|max:255',
             'serviceName' => 'required|string|max:255',
             'serviceLink' => 'required|string|max:255',
-            'orderingAt' => 'required|string|date_format:H:i:s',
+            'orderingAt' => 'required|string|after:now',
         ];
     }
 
